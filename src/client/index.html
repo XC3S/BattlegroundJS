@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <title>BattlegroundJS</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      .chat-box {position: absolute; bottom: 0px; right: 0px; height: 200px; width: 500px; background: #aaa}
+      .player {position: absolute;width: 10px; height: 10px; background-color: #00f;}
+    </style>
+  </head>
+  <body ng-app="battleApp">
+    <div ng-controller="renderingController">
+      {{players}}
+
+      <div class="player" ng-repeat="player in players" style="left: {{player.location.x}}px;top: {{player.location.y}}px;"></div>
+    </div>
+    <div class="chat-box">
+      <ul id="messages"></ul>
+      <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+
+    <script type="text/javascript">
+      var battleApp = angular.module('battleApp',[]);
+
+      battleApp.factory('$socket', function($rootScope){
+        var socket = io.connect();
+
+        return {
+          on: function(eventName, callback){
+            socket.on(eventName,function(){
+              var args = arguments;
+              $rootScope.$apply(function(){
+                callback.apply(socket, args);
+              });
+            });
+          },
+          emit: function(eventName, data, callback){
+            socket.emit(eventName, data, function(){
+              var args = arguments;
+              $rootScope.$apply(function(){
+                if (callback) {
+                  callback.apply(socket, args);
+                }
+              });
+            });
+          }
+        }
+      });
+      
+      var renderingController = function($scope,$socket){
+        $scope.players = null;
+        //$scope.hallo = 'world';
+
+        $('form').submit(function(){
+          $socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+
+        $socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text(msg));
+        });
+
+        $socket.on('update players', function(connectedPlayers){
+          $scope.players = connectedPlayers;
+          //console.log("connectedPlayers",connectedPlayers);
+        });
+
+
+        var pi = new playerInput();
+        pi.initListeners(function(){
+          $socket.emit('update input',pi.movement);
+        });
+      }
+
+      battleApp.controller('renderingController',renderingController);
+
+      renderingController.$inject = ['$scope','$socket'];
+
+    </script>
+
+  	<script src="/js/playerInput.js"></script>
+    <script src="/js/demo.js"></script>
+  </body>
+</html>
