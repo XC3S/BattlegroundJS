@@ -4,9 +4,14 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
 
+var gameInstance = require('./server/game/GameInstance')();
+gameInstance.createGame();
+
+
+var chatManager = require('./server/chat/ChatManager');
+
 
 // host files
-
 server.listen(3000,function(){
 	console.log("server started");
 });
@@ -36,11 +41,14 @@ io.on('connection', function(socket){
 		console.log('connection count: ',connectedPlayers.length);
 	});
 
+	chatManager(io,socket);
+
+	/*
 	socket.on('chat message', function(msg){
 		console.log('message: ' + msg);
 		io.emit('chat message', msg);
 	});
-
+	*/
 	socket.on('update input', function(mov){
 		getPlayerByConnectionID(socket.id).input.top = mov.top;
 		getPlayerByConnectionID(socket.id).input.right = mov.right;
@@ -60,7 +68,9 @@ setInterval(function(){
 function processPlayerMovements(deltaTime){
 	_.each(connectedPlayers,function(player){
 		//console.log(player.input.right,player.movement.speed,deltaTime);
-		player.location.x += player.input.right * player.movement.speed * deltaTime; 
+		if (player.location.x >= 0 || player.input.right > 0) {
+			player.location.x += player.input.right * player.movement.speed * deltaTime; 
+		}
 		player.location.y -= player.input.top * player.movement.speed * deltaTime; 
 	});
 }
