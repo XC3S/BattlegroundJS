@@ -16,7 +16,6 @@ var playerInput = function(){
 
 	private.onKeyDown = function(event) {
 		var keyCode = event.keyCode;
-		console.log("keydown");
 		switch (keyCode) {
 			case 68: //d
 				public.movement.right = 1;
@@ -39,7 +38,6 @@ var playerInput = function(){
 
 	private.onKeyUp = function(event) {
 		var keyCode = event.keyCode;
-		console.log("keyup");
 		switch (keyCode) {
 			case 68: //d
 				public.movement.right = 0;

@@ -20,7 +20,7 @@
 
       <div class="player" ng-repeat="player in players" style="left: {{player.location.x}}px;top: {{player.location.y}}px;"></div>
     </div>
-    <div class="chat-box">
+    <div class="chat-box" ng-controller="chatController">
       <ul id="messages"></ul>
       <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>
@@ -31,53 +31,20 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 
-    <script type="text/javascript">
-      var battleApp = angular.module('battleApp',[]);
+    <script src="/js/application/battleApp.js"></script>
+    <script src="/js/network/socketService.js"></script>
+    <script src="/js/chat/chatController.js"></script>
+    <script src="/js/input/playerInput.js"></script>
 
-      battleApp.factory('$socket', function($rootScope){
-        var socket = io.connect();
-
-        return {
-          on: function(eventName, callback){
-            socket.on(eventName,function(){
-              var args = arguments;
-              $rootScope.$apply(function(){
-                callback.apply(socket, args);
-              });
-            });
-          },
-          emit: function(eventName, data, callback){
-            socket.emit(eventName, data, function(){
-              var args = arguments;
-              $rootScope.$apply(function(){
-                if (callback) {
-                  callback.apply(socket, args);
-                }
-              });
-            });
-          }
-        }
-      });
-      
+    <script type="text/javascript">      
       var renderingController = function($scope,$socket){
         $scope.players = null;
         //$scope.hallo = 'world';
-
-        $('form').submit(function(){
-          $socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          return false;
-        });
-
-        $socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
-        });
 
         $socket.on('update players', function(connectedPlayers){
           $scope.players = connectedPlayers;
           //console.log("connectedPlayers",connectedPlayers);
         });
-
 
         var pi = new playerInput();
         pi.initListeners(function(){
@@ -86,12 +53,7 @@
       }
 
       battleApp.controller('renderingController',renderingController);
-
       renderingController.$inject = ['$scope','$socket'];
-
     </script>
-
-  	<script src="/js/playerInput.js"></script>
-    <script src="/js/demo.js"></script>
   </body>
 </html>

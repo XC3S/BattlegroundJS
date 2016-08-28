@@ -9,6 +9,11 @@ gameInstance.createGame();
 
 
 var chatManager = require('./server/chat/ChatManager');
+var mapManager = require('./server/map/MapManager');
+
+// run some test
+console.log("Test -> Map -> get item in range = ",mapManager().getField(1,2));
+console.log("Test -> Map -> get item out of range =",mapManager().getField(999999,999999));
 
 
 // host files
@@ -52,8 +57,6 @@ io.on('connection', function(socket){
 	socket.on('update input', function(mov){
 		getPlayerByConnectionID(socket.id).input.top = mov.top;
 		getPlayerByConnectionID(socket.id).input.right = mov.right;
-		
-		console.log(getPlayerByConnectionID(socket.id).location);
 	});
 });
 
