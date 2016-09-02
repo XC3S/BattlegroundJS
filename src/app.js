@@ -7,6 +7,8 @@ var _ = require('underscore');
 var gameInstance = require('./server/game/GameInstance')();
 gameInstance.createGame();
 
+// maybe use 
+var tickTimeStamp = Date.now();
 
 var chatManager = require('./server/chat/ChatManager');
 var mapManager = require('./server/map/MapManager');
@@ -60,9 +62,15 @@ io.on('connection', function(socket){
 	});
 });
 
+
+// main game loop
+// @TODO: replace intervall with a loop (maybe a skip frame feature)
 setInterval(function(){
-	processPlayerMovements(0.01);
-	//console.log(connectedPlayers);
+	var deltaTime = (Date.now() - tickTimeStamp) / 1000;
+	tickTimeStamp = Date.now();
+	
+	processPlayerMovements(deltaTime);
+	
 	io.sockets.clients().emit('update players', connectedPlayers);
 },16);
 
@@ -97,7 +105,7 @@ function createPlayer(connectionId){
 			right: 0
 		},
 		movement: {
-			speed: 300
+			speed: 100
 		},
 		connectionId: connectionId
 	};

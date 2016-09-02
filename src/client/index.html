@@ -46,6 +46,11 @@
           //console.log("connectedPlayers",connectedPlayers);
         });
 
+        $socket.on('receive chunk', function(chunk){
+          //$scope.players = connectedPlayers;
+          console.log("receive chunk", chunk);
+        });
+
         var pi = new playerInput();
         pi.initListeners(function(){
           $socket.emit('update input',pi.movement);
