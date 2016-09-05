@@ -22,5 +22,9 @@ function mapManager(){
 		}
 	};
 
+	manager.getChunk = function(x,y){
+		
+	};
+
 	return manager;
 }
