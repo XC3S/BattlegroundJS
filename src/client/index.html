@@ -4,7 +4,7 @@
     <title>BattlegroundJS</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
+      body { font: 13px Helvetica, Arial; overflow: hidden;}
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
@@ -15,11 +15,25 @@
     </style>
   </head>
   <body ng-app="battleApp">
+    <!-- Player -->
     <div ng-controller="renderingController">
-      {{players}}
+      {{player}}
 
       <div class="player" ng-repeat="player in players" style="left: {{player.location.x}}px;top: {{player.location.y}}px;"></div>
+
+
+
+      <!-- Map -->
+      <div ng-controller="mapController">
+        <div ng-repeat="chunk in chunks">
+          <div ng-repeat="field in chunk.fields" style="width: 100px; height: 100px; position: absolute;left: {{field.x * 100}}px; top:{{field.y * 100}}px; border: 1px solid black; margin: -1px; box-sizing: border-box;"></div>  
+        </div>
+      </div>
     </div>
+
+   
+
+    <!-- Chat -->
     <div class="chat-box" ng-controller="chatController">
       <ul id="messages"></ul>
       <form action="">
@@ -35,20 +49,20 @@
     <script src="/js/network/socketService.js"></script>
     <script src="/js/chat/chatController.js"></script>
     <script src="/js/input/playerInput.js"></script>
+    <script src="/js/map/mapController.js"></script>
 
     <script type="text/javascript">      
-      var renderingController = function($scope,$socket){
+      var renderingController = function($scope,$socket,$window){
         $scope.players = null;
         //$scope.hallo = 'world';
+
+        $scope.getMapMovementOffset = function(){
+
+        };       
 
         $socket.on('update players', function(connectedPlayers){
           $scope.players = connectedPlayers;
           //console.log("connectedPlayers",connectedPlayers);
-        });
-
-        $socket.on('receive chunk', function(chunk){
-          //$scope.players = connectedPlayers;
-          console.log("receive chunk", chunk);
         });
 
         var pi = new playerInput();
@@ -58,7 +72,7 @@
       }
 
       battleApp.controller('renderingController',renderingController);
-      renderingController.$inject = ['$scope','$socket'];
+      renderingController.$inject = ['$scope','$socket','$window'];
     </script>
   </body>
 </html>

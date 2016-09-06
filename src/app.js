@@ -14,9 +14,9 @@ var chatManager = require('./server/chat/ChatManager');
 var mapManager = require('./server/map/MapManager');
 
 // run some test
-console.log("Test -> Map -> get item in range = ",mapManager().getField(1,2));
-console.log("Test -> Map -> get item out of range =",mapManager().getField(999999,999999));
-
+//console.log("Test -> Map -> get item in range = ",mapManager().getField(1,2));
+//console.log("Test -> Map -> get item out of range =",mapManager().getField(999999,999999));
+//console.log("Test -> Chunk -> get chunk = ",mapManager().getChunk(1,2));
 
 // host files
 server.listen(3000,function(){
@@ -60,6 +60,8 @@ io.on('connection', function(socket){
 		getPlayerByConnectionID(socket.id).input.top = mov.top;
 		getPlayerByConnectionID(socket.id).input.right = mov.right;
 	});
+
+	socket.emit('receive chunk',mapManager().getChunk(0,0));
 });
 
 
@@ -105,7 +107,7 @@ function createPlayer(connectionId){
 			right: 0
 		},
 		movement: {
-			speed: 100
+			speed: 10
 		},
 		connectionId: connectionId
 	};
