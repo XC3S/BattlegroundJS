@@ -16,3 +16,10 @@ A realtime browser mmorpg
 - [ ] Group System
 - [ ] PvP System
 - [ ] Instance System (Houses usw.)
+- [ ] Attack & Damage System
+- [ ] Generic AI System
+- [ ] AI Path finding
+- [ ] Generic Melee Enemy
+- [ ] Generic Range Enemy
+- [ ] Generic Trading NPC
+- [ ] Crafting System ?
