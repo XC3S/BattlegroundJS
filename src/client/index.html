@@ -53,22 +53,34 @@
 
     <script type="text/javascript">      
       var renderingController = function($scope,$socket,$window){
-        $scope.players = null;
+        //$scope.players = null;
         //$scope.hallo = 'world';
+
+        $scope.ownPlayer = null;
 
         $scope.getMapMovementOffset = function(){
 
         };       
 
+
+        $socket.on('replicate player',function(data){
+            console.log(data);
+            $scope.ownPlayer = data;
+        });
+
+
+        // currently unused /*
         $socket.on('update players', function(connectedPlayers){
           $scope.players = connectedPlayers;
           //console.log("connectedPlayers",connectedPlayers);
         });
+        */
 
         var pi = new playerInput();
         pi.initListeners(function(){
           $socket.emit('update input',pi.movement);
         });
+
       }
 
       battleApp.controller('renderingController',renderingController);

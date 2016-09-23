@@ -73,11 +73,27 @@ setInterval(function(){
 	
 	processPlayerMovements(deltaTime);
 	
-	io.sockets.clients().emit('update players', connectedPlayers);
+	//io.sockets.clients().emit('update players', connectedPlayers);
+
+	replicatePlayerInformations();
+	replicateNearPlayers();
 },16);
 
-// manage players
 
+//inspiration: CrossCode 
+
+function replicatePlayerInformations(){
+	_.each(connectedPlayers,function(player){
+		io.to(player.connectionId).emit(player);
+	});	
+}
+
+function replicateNearPlayers(){
+
+}
+
+
+// calculate movement 
 function processPlayerMovements(deltaTime){
 	_.each(connectedPlayers,function(player){
 		//console.log(player.input.right,player.movement.speed,deltaTime);
