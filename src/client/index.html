@@ -17,16 +17,16 @@
   <body ng-app="battleApp">
     <!-- Player -->
     <div ng-controller="renderingController">
+      <!--
       {{player}}
-
       <div class="player" ng-repeat="player in players" style="left: {{player.location.x}}px;top: {{player.location.y}}px;"></div>
-
+      -->
 
 
       <!-- Map -->
       <div ng-controller="mapController">
-        <div ng-repeat="chunk in chunks">
-          <div ng-repeat="field in chunk.fields" style="width: 100px; height: 100px; position: absolute;left: {{field.x * 100}}px; top:{{field.y * 100}}px; border: 1px solid black; margin: -1px; box-sizing: border-box;"></div>  
+        <div ng-repeat="chunk in chunks" class="chunk">
+          <div ng-repeat="field in chunk.fields" class="field" style="width: 100px; height: 100px; position: absolute;left: {{field.x * 100}}px; top:{{field.y * 100}}px; border: 1px solid black; margin: -1px; box-sizing: border-box;"></div>  
         </div>
       </div>
     </div>
@@ -58,7 +58,15 @@
 
         $scope.ownPlayer = null;
 
-        $scope.getMapMovementOffset = function(){
+        // todo
+        $scope.getPlayerRenderLocation = function(){
+          return {
+            x: ,
+            y: 
+          } 
+        }
+
+        $scope.getFieldLocationOffSet = function(field){
 
         };       
 
@@ -69,7 +77,8 @@
         });
 
 
-        // currently unused /*
+        // currently unused 
+        /*
         $socket.on('update players', function(connectedPlayers){
           $scope.players = connectedPlayers;
           //console.log("connectedPlayers",connectedPlayers);

@@ -1,6 +1,6 @@
 # BattlegroundJS
 A realtime browser mmorpg
-
+separately
 ## Pipeline
 - [x] ~~Basic Movement~~
 - [x] ~~Basic Chat System (only global atm)~~
