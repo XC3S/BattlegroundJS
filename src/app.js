@@ -84,7 +84,7 @@ setInterval(function(){
 
 function replicatePlayerInformations(){
 	_.each(connectedPlayers,function(player){
-		io.to(player.connectionId).emit(player);
+		io.to(player.connectionId).emit("replicate player",player);
 	});	
 }
 
