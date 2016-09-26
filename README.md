@@ -7,7 +7,7 @@ separately
 - [x] ~~Grid based Map~~
 - [x] ~~dynamic Map loading using 10x10 chunks~~
 - [x] ~~Basic Map Rendenring~~
-- [ ] Replicate own player separately
+- [X] ~~Replicate own player separately~~
 - [ ] Chunk based player loading 
 - [ ] Basic Map Collision
 - [ ] Basic Character Rendering

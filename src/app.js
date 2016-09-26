@@ -115,8 +115,8 @@ function removePlayer(player){
 function createPlayer(connectionId){
 	var player =  {
 		location: {
-			x: 0,
-			y: 0
+			x: 550,
+			y: 550
 		},
 		input: {
 			top: 0,

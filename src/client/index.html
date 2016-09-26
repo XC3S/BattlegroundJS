@@ -12,7 +12,9 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
       .chat-box {position: absolute; bottom: 0px; right: 0px; height: 200px; width: 500px; background: #aaa}
-      .player {position: absolute;width: 10px; height: 10px; background-color: #00f;z-index: 1000}
+      .player {position: absolute;width: 10px; height: 10px; background-color: #f00;z-index: 1000}
+      .field-1 {background-color: green}
+      .field-2 {background-color: grey}
     </style>
   </head>
   <body ng-app="battleApp">
@@ -34,7 +36,7 @@
         {{chunks[0].fields[0]}}
 
         <div ng-repeat="chunk in chunks" class="chunk">
-          <div ng-repeat="field in chunk.fields" class="field" style="width: 100px; height: 100px; position: absolute;left: {{getFieldLocationOffSet(field).x * 100}}px; top:{{getFieldLocationOffSet(field).y * 100}}px; border: 1px solid black; margin: -1px; box-sizing: border-box;"></div>  
+          <div ng-repeat="field in chunk.fields" class="field field-{{field.style}}" style="width: 100px; height: 100px; position: absolute;left: {{getFieldLocationOffSet(field).x}}px; top:{{getFieldLocationOffSet(field).y}}px; border: 1px solid black; margin: -1px; box-sizing: border-box;"></div>  
         </div>
       </div>
     </div>
@@ -76,7 +78,6 @@
           });
         });
 
-        // todo
         $scope.getPlayerRenderLocation = function(){
           return {
             x: (renderWidth / 2),
@@ -85,10 +86,9 @@
         }
 
         $scope.getFieldLocationOffSet = function(field){
-          //field - player + offset ???  
           return {
-            x: $scope.ownPlayer ? (field.x - $scope.ownPlayer.location.x + $scope.getPlayerRenderLocation().x) : 0,
-            y: $scope.ownPlayer ? (field.y - $scope.ownPlayer.location.y + $scope.getPlayerRenderLocation().y) : 0
+            x: $scope.ownPlayer ? ((field.x * 100) - $scope.ownPlayer.location.x + $scope.getPlayerRenderLocation().x) : 0,
+            y: $scope.ownPlayer ? ((field.y * 100) - $scope.ownPlayer.location.y + $scope.getPlayerRenderLocation().y) : 0
           }
         };
 
