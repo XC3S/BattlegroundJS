@@ -22,6 +22,10 @@ function mapManager(){
 		}
 	};
 
+	manager.getFieldByLocation = function(x,y){
+		return mapData.fields[parseInt(x / 100)][parseInt(y / 100)];
+	};
+
 	manager.getChunk = function(x,y){
 		var chunk = {};
 

@@ -21,6 +21,7 @@ function mapMock(){
 		}
 	}
 
+	map.fields[2][5] = createField(2,1);
 	map.fields[3][3] = createField(2,1);
 	map.fields[3][4] = createField(2,1);
 

@@ -1,7 +1,7 @@
 # BattlegroundJS
 A realtime browser mmorpg
-separately
-## Pipeline
+
+## Basics
 - [x] ~~Basic Movement~~
 - [x] ~~Basic Chat System (only global atm)~~
 - [x] ~~Grid based Map~~
@@ -9,19 +9,36 @@ separately
 - [x] ~~Basic Map Rendenring~~
 - [X] ~~Replicate own player separately~~
 - [ ] Chunk based player loading 
-- [ ] Basic Map Collision
+- [X] ~~Basic Map Collision~~
+- [ ] Basic Images & Gifs (Map)
 - [ ] Basic Character Rendering
 - [ ] Animation System (State Machine ?)
 - [ ] Basic Auth & Session Handling
 - [ ] dynamic rendering size based on screen size
 - [ ] Basic Class System
 - [ ] Group System
-- [ ] PvP System
-- [ ] Instance System (Houses usw.)
+- [ ] Instance System (Houses,Dungeons usw.)
 - [ ] Attack & Damage System
+- [ ] Inventory System
+- [ ] Item & Skill Interfaces (Generic useable elements)
 - [ ] Generic AI System
-- [ ] AI Path finding
+- [ ] Basic AI Movement
+- [X] ~~Basic Global Chat~~
+
+## Backoffice & Game Management
+- [ ] Basic Backoffice Framework
+- [ ] Map Editor
+- [ ] Player & Account Management
+
+## Advanced Game Mechanic
+- [ ] Sub Field Collision
+- [ ] Advanced path finding for AIs
+- [ ] PvP System
+- [ ] Group/Party System
+
+## Gameplay Elements
+- [ ] Crafting System
 - [ ] Generic Melee Enemy
 - [ ] Generic Range Enemy
 - [ ] Generic Trading NPC
-- [ ] Crafting System ?
+- [ ] Quest System

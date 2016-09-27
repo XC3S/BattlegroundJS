@@ -96,13 +96,40 @@ function replicateNearPlayers(){
 // calculate movement 
 function processPlayerMovements(deltaTime){
 	_.each(connectedPlayers,function(player){
-		//console.log(player.input.right,player.movement.speed,deltaTime);
-		if (player.location.x >= 0 || player.input.right > 0) {
+		// left & right
+		if(!checkCollisionX(player.location.x, player.location.y, player.input.right, player.movement.speed * deltaTime, 5)){
 			player.location.x += player.input.right * player.movement.speed * deltaTime; 
 		}
-		player.location.y -= player.input.top * player.movement.speed * deltaTime; 
+
+		// top && down
+		if(!checkCollisionY(player.location.x, player.location.y, player.input.top, player.movement.speed * deltaTime, 5)){
+			player.location.y -= player.input.top * player.movement.speed * deltaTime;
+		};	
 	});
 }
+
+// false = blocked; true = free
+function checkCollisionX(playerLocationX,playerLocationY,movementInput,travelDistance,playerCollisionRadius){
+	if (movementInput > 0) { // right
+		return mapManager().getFieldByLocation(playerLocationX + travelDistance + playerCollisionRadius,playerLocationY).collision;
+	} 
+	if (movementInput < 0) { // left
+		return mapManager().getFieldByLocation(playerLocationX - travelDistance - playerCollisionRadius,playerLocationY).collision;
+	}
+	return false;
+}
+
+function checkCollisionY(playerLocationX,playerLocationY,movementInput,travelDistance,playerCollisionRadius){
+	if (movementInput > 0) { // down
+		return mapManager().getFieldByLocation(playerLocationX,playerLocationY + travelDistance - playerCollisionRadius).collision;
+	} 
+	if (movementInput < 0) { // up
+		return mapManager().getFieldByLocation(playerLocationX,playerLocationY - travelDistance + playerCollisionRadius).collision;
+	}
+	return false;
+}
+
+
 
 function getPlayerByConnectionID(connectionId){
 	return _.findWhere(connectedPlayers,{connectionId: connectionId});
@@ -123,7 +150,7 @@ function createPlayer(connectionId){
 			right: 0
 		},
 		movement: {
-			speed: 10
+			speed: 30
 		},
 		connectionId: connectionId
 	};
