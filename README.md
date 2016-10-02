@@ -43,3 +43,8 @@ A realtime browser mmorpg
 - [ ] Generic Range Enemy
 - [ ] Generic Trading NPC
 - [ ] Quest System
+
+## Performance
+- [ ] Cluster Serverside Calulations
+- [ ] reduce size of replicated objects
+
