@@ -11,12 +11,12 @@ gameInstance.createGame();
 var tickTimeStamp = Date.now();
 
 var chatManager = require('./server/chat/ChatManager');
-var mapManager = require('./server/map/MapManager');
+var mapManager = require('./server/map/MapManager')();
 
 // run some test
-//console.log("Test -> Map -> get item in range = ",mapManager().getField(1,2));
-//console.log("Test -> Map -> get item out of range =",mapManager().getField(999999,999999));
-//console.log("Test -> Chunk -> get chunk = ",mapManager().getChunk(1,2));
+//console.log("Test -> Map -> get item in range = ",mapManager.getField(1,2));
+//console.log("Test -> Map -> get item out of range =",mapManager.getField(999999,999999));
+//console.log("Test -> Chunk -> get chunk = ",mapManager.getChunk(1,2));
 
 // host files
 server.listen(3000,function(){
@@ -63,8 +63,8 @@ io.on('connection', function(socket){
 
 	var playerChunkIndexX = parseInt(getPlayerByConnectionID(socket.id).location.x / 1000);
 	var playerChunkIndexY = parseInt(getPlayerByConnectionID(socket.id).location.y / 1000);
-	socket.emit('receive chunk',mapManager().getChunk(playerChunkIndexX,playerChunkIndexY));
-	socket.emit('receive chunk',mapManager().getChunk(playerChunkIndexX + 1,playerChunkIndexY));
+	socket.emit('receive chunk',mapManager.getChunk(playerChunkIndexX,playerChunkIndexY));
+	socket.emit('receive chunk',mapManager.getChunk(playerChunkIndexX + 1,playerChunkIndexY));
 });
 
 
@@ -92,13 +92,11 @@ function replicatePlayerInformations(player){
 }
 
 function replicateNearPlayers(player){
-	var chunk = mapManager().getChunk(parseInt(player.location.x / 1000),parseInt(player.location.y / 1000));
+	var chunk = mapManager.getChunk(parseInt(player.location.x / 1000),parseInt(player.location.y / 1000));
 	
 	var playersToReplicate = _.filter(getPlayersInChunk(chunk),function(otherPlayer){
 		return player.connectionId != otherPlayer.connectionId;
 	});
-
-	console.log("playersToReplicate",player.connectionId,playersToReplicate.length,"(" + parseInt(player.location.x / 1000) + "/" + parseInt(player.location.y / 1000) );
 
 	io.to(player.connectionId).emit("replicate nearplayers",playersToReplicate);
 }
@@ -108,8 +106,6 @@ function getPlayersInChunk(chunk){
 	var minY = chunk.y * 1000;
 	var maxX = minX + 1000;
 	var maxY = minY + 1000;
-
-	console.log("CHUNK maxX ", maxX);
 
 	var playersInChunk = _.filter(connectedPlayers,function(player){
 		return player.location.x > minX && player.location.x < maxX && player.location.y > minY && player.location.y < maxY
@@ -138,20 +134,20 @@ function processPlayerMovements(deltaTime){
 // false = blocked; true = free
 function checkCollisionX(playerLocationX,playerLocationY,movementInput,travelDistance,playerCollisionRadius){
 	if (movementInput > 0) { // right
-		return mapManager().getFieldByLocation(playerLocationX + travelDistance + playerCollisionRadius,playerLocationY).collision;
+		return mapManager.getFieldByLocation(playerLocationX + travelDistance + playerCollisionRadius,playerLocationY).collision;
 	} 
 	if (movementInput < 0) { // left
-		return mapManager().getFieldByLocation(playerLocationX - travelDistance - playerCollisionRadius,playerLocationY).collision;
+		return mapManager.getFieldByLocation(playerLocationX - travelDistance - playerCollisionRadius,playerLocationY).collision;
 	}
 	return false;
 }
 
 function checkCollisionY(playerLocationX,playerLocationY,movementInput,travelDistance,playerCollisionRadius){
 	if (movementInput > 0) { // down
-		return mapManager().getFieldByLocation(playerLocationX,playerLocationY + travelDistance - playerCollisionRadius).collision;
+		return mapManager.getFieldByLocation(playerLocationX,playerLocationY + travelDistance - playerCollisionRadius).collision;
 	} 
 	if (movementInput < 0) { // up
-		return mapManager().getFieldByLocation(playerLocationX,playerLocationY - travelDistance + playerCollisionRadius).collision;
+		return mapManager.getFieldByLocation(playerLocationX,playerLocationY - travelDistance + playerCollisionRadius).collision;
 	}
 	return false;
 }
