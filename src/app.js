@@ -61,7 +61,10 @@ io.on('connection', function(socket){
 		getPlayerByConnectionID(socket.id).input.right = mov.right;
 	});
 
-	socket.emit('receive chunk',mapManager().getChunk(0,0));
+	var playerChunkIndexX = parseInt(getPlayerByConnectionID(socket.id).location.x / 1000);
+	var playerChunkIndexY = parseInt(getPlayerByConnectionID(socket.id).location.y / 1000);
+	socket.emit('receive chunk',mapManager().getChunk(playerChunkIndexX,playerChunkIndexY));
+	socket.emit('receive chunk',mapManager().getChunk(playerChunkIndexX + 1,playerChunkIndexY));
 });
 
 
@@ -74,23 +77,47 @@ setInterval(function(){
 	processPlayerMovements(deltaTime);
 	
 	//io.sockets.clients().emit('update players', connectedPlayers);
-
-	replicatePlayerInformations();
-	replicateNearPlayers();
+	_.each(connectedPlayers,function(player){
+		replicatePlayerInformations(player);
+		replicateNearPlayers(player);
+	});
 },16);
 
 
 //inspiration: CrossCode 
 
-function replicatePlayerInformations(){
-	_.each(connectedPlayers,function(player){
-		io.to(player.connectionId).emit("replicate player",player);
-	});	
+
+function replicatePlayerInformations(player){
+	io.to(player.connectionId).emit("replicate player",player);
 }
 
-function replicateNearPlayers(){
+function replicateNearPlayers(player){
+	var chunk = mapManager().getChunk(parseInt(player.location.x / 1000),parseInt(player.location.y / 1000));
+	
+	var playersToReplicate = _.filter(getPlayersInChunk(chunk),function(otherPlayer){
+		return player.connectionId != otherPlayer.connectionId;
+	});
 
+	console.log("playersToReplicate",player.connectionId,playersToReplicate.length,"(" + parseInt(player.location.x / 1000) + "/" + parseInt(player.location.y / 1000) );
+
+	io.to(player.connectionId).emit("replicate nearplayers",playersToReplicate);
 }
+
+function getPlayersInChunk(chunk){
+	var minX = chunk.x * 1000;
+	var minY = chunk.y * 1000;
+	var maxX = minX + 1000;
+	var maxY = minY + 1000;
+
+	console.log("CHUNK maxX ", maxX);
+
+	var playersInChunk = _.filter(connectedPlayers,function(player){
+		return player.location.x > minX && player.location.x < maxX && player.location.y > minY && player.location.y < maxY
+	});
+
+	return playersInChunk;
+}
+
 
 
 // calculate movement 
@@ -128,7 +155,6 @@ function checkCollisionY(playerLocationX,playerLocationY,movementInput,travelDis
 	}
 	return false;
 }
-
 
 
 function getPlayerByConnectionID(connectionId){
