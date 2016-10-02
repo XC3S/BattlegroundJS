@@ -8,8 +8,9 @@ A realtime browser mmorpg
 - [x] ~~dynamic Map loading using 10x10 chunks~~
 - [x] ~~Basic Map Rendenring~~
 - [X] ~~Replicate own player separately~~
-- [ ] Chunk based player loading 
+- [X] ~~Chunk based player loading~~ 
 - [X] ~~Basic Map Collision~~
+- [ ] Basic Database setup
 - [ ] Basic Images & Gifs (Map)
 - [ ] Basic Character Rendering
 - [ ] Animation System (State Machine ?)
