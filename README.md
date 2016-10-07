@@ -48,3 +48,6 @@ A realtime browser mmorpg
 - [ ] Cluster Serverside Calulations
 - [ ] reduce size of replicated objects
 
+## Bugfixes & improvements
+- [ ] Collect imputs for each key & merge it to the movements axis
+- [ ] Calulate Collision from the egdes of the playerbox 
