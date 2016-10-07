@@ -11,6 +11,7 @@ var tickTimeStamp = Date.now();
 
 var chatManager = require('./server/chat/ChatManager');
 var mapManager = require('./server/map/MapManager');
+var animationManager = require('./server/animation/AnimationManager');
 
 // run some test
 //console.log("Test -> Map -> get item in range = ",mapManager.getField(1,2));
@@ -75,9 +76,12 @@ setInterval(function(){
 	tickTimeStamp = Date.now();
 	
 	processPlayerMovements(deltaTime);
+
 	
 	//io.sockets.clients().emit('update players', connectedPlayers);
 	_.each(connectedPlayers,function(player){
+		animationManager.determinePlayerAnimation(player);
+
 		replicatePlayerInformations(player);
 		replicateNearPlayers(player);
 	});
@@ -174,7 +178,8 @@ function createPlayer(connectionId){
 		movement: {
 			speed: 50
 		},
-		connectionId: connectionId
+		connectionId: connectionId,
+		class: "ExamplePlayer"
 	};
 
 	connectedPlayers.push(player);

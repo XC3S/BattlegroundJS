@@ -24,7 +24,7 @@
       <h3>player data</h3>
       {{ownPlayer}}
 
-      <div class="player" style="left: {{getPlayerRenderLocation().x}}px;top: {{getPlayerRenderLocation().y}}px;"></div>
+      <div class="player" style="left: {{getPlayerRenderLocation().x}}px;top: {{getPlayerRenderLocation().y}}px;background-image: url('/images/anims/{{ownPlayer.class}}/{{ownPlayer.animation.animation}}') "></div>
 
       <div class="otherplayer" ng-repeat="nearPlayer in nearPlayers" style="left: {{getNearPlayerOffSet(nearPlayer).x}}px;top: {{getNearPlayerOffSet(nearPlayer).y}}px;"></div>
 
