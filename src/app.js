@@ -4,14 +4,13 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
 
-var gameInstance = require('./server/game/GameInstance')();
-gameInstance.createGame();
+var gameInstance = require('./server/game/GameInstance');
 
 // maybe use 
 var tickTimeStamp = Date.now();
 
 var chatManager = require('./server/chat/ChatManager');
-var mapManager = require('./server/map/MapManager')();
+var mapManager = require('./server/map/MapManager');
 
 // run some test
 //console.log("Test -> Map -> get item in range = ",mapManager.getField(1,2));

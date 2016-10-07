@@ -1,4 +1,4 @@
-module.exports = mapManager;
+module.exports = mapManager();
 
 var mapData = require('./MapMock')();
 
