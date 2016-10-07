@@ -28,6 +28,7 @@ app.get('/', function(req, res){
 });
 
 app.use('/js', express.static(__dirname + '/client/js'));
+app.use('/images', express.static(__dirname + '/client/images'));
 
 
 // manage connections
@@ -120,12 +121,12 @@ function getPlayersInChunk(chunk){
 function processPlayerMovements(deltaTime){
 	_.each(connectedPlayers,function(player){
 		// left & right
-		if(!checkCollisionX(player.location.x, player.location.y, player.input.right, player.movement.speed * deltaTime, 5)){
+		if(!checkCollisionX(player.location.x, player.location.y, player.input.right, player.movement.speed * deltaTime, 25)){
 			player.location.x += player.input.right * player.movement.speed * deltaTime; 
 		}
 
 		// top && down
-		if(!checkCollisionY(player.location.x, player.location.y, player.input.top, player.movement.speed * deltaTime, 5)){
+		if(!checkCollisionY(player.location.x, player.location.y, player.input.top, player.movement.speed * deltaTime, 25)){
 			player.location.y -= player.input.top * player.movement.speed * deltaTime;
 		};	
 	});
@@ -172,7 +173,7 @@ function createPlayer(connectionId){
 			right: 0
 		},
 		movement: {
-			speed: 30
+			speed: 50
 		},
 		connectionId: connectionId
 	};
