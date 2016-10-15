@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
+var _ = require('underscore');
 
 var gameInstance = require('./server/game/GameInstance');
 
@@ -176,7 +176,7 @@ function createPlayer(connectionId){
 			right: 0
 		},
 		movement: {
-			speed: 50
+			speed: 75
 		},
 		connectionId: connectionId,
 		class: "ExamplePlayer"

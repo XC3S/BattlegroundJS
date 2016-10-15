@@ -13,7 +13,7 @@
       #messages li:nth-child(odd) { background: #eee; }
       .chat-box {position: absolute; bottom: 0px; right: 0px; height: 200px; width: 500px; background: #aaa}
       .player {position: absolute;width: 50px; height: 50px; background-image: url('/images/anims/ExamplePlayer/Down/Down.gif'); background-size: cover;z-index: 1000; transform: translate(-50%,-50%);}
-      .otherplayer {position: absolute;width: 50px; height: 50px; background-color: #00f;z-index: 1000; transform: translate(-50%,-50%);}
+      .otherplayer {position: absolute;width: 50px; height: 50px; background-image: url('/images/anims/ExamplePlayer/Down/Down.gif'); z-index: 1000; transform: translate(-50%,-50%);background-size: cover;}
       .field-1 {background-color: green}
       .field-2 {background-color: grey}
     </style>
@@ -26,7 +26,7 @@
 
       <div class="player" style="left: {{getPlayerRenderLocation().x}}px;top: {{getPlayerRenderLocation().y}}px;background-image: url('/images/anims/{{ownPlayer.class}}/{{ownPlayer.animation.animation}}') "></div>
 
-      <div class="otherplayer" ng-repeat="nearPlayer in nearPlayers" style="left: {{getNearPlayerOffSet(nearPlayer).x}}px;top: {{getNearPlayerOffSet(nearPlayer).y}}px;"></div>
+      <div class="otherplayer" ng-repeat="nearPlayer in nearPlayers" style="left: {{getNearPlayerOffSet(nearPlayer).x}}px;top: {{getNearPlayerOffSet(nearPlayer).y}}px;background-image: url('/images/anims/{{nearPlayer.class}}/{{nearPlayer.animation.animation}}')"></div>
 
       <!-- Map -->
       <div ng-controller="mapController">
