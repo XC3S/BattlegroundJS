@@ -1,3 +1,5 @@
+![alt tag](https://s10.postimg.org/cngy0wzjt/Battleground_JS.png)
+
 # BattlegroundJS
 A realtime browser mmorpg
 
@@ -12,8 +14,8 @@ A realtime browser mmorpg
 - [X] ~~Basic Map Collision~~
 - [ ] Basic Database setup
 - [ ] Basic Images & Gifs (Map)
-- [ ] Basic Character Rendering
-- [ ] Animation System (State Machine ?)
+- [X] ~~Basic Character Rendering~~
+- [X] ~~Animation System (State Machine ?)~~
 - [ ] Basic Auth & Session Handling
 - [ ] dynamic rendering size based on screen size
 - [ ] Basic Class System
