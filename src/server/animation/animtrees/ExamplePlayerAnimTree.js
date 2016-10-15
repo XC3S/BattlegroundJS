@@ -50,14 +50,45 @@ function animtree(player){
 				return transition.condition()
 			});
 
-			if (nextState) {
+			if (nextState){
 				player.animation.state = nextState.target;
 				player.animation.animation = _.find(tree.states,function(state){
 					return state.name == nextState.target;
 				}).animation;
 			}	
 		}
-	}
+	};
+
+	tree.determineDirection = function(){
+		if (player.input.top > 0 && player.input.right > 0){
+			return "LeftDown";
+		}
+		else if (player.input.top > 0 && player.input.right < 0){
+			return "RightDown";
+		}
+		else if (player.input.top > 0 && player.input.right == 0){
+			return "Down";
+		}
+		else if (player.input.top < 0 && player.input.right > 0){
+			return "LeftUp";
+		}
+		else if (player.input.top < 0 && player.input.right == 0){
+			return "Up";
+		}
+		else if (player.input.top < 0 && player.input.right < 0){
+			return "RightUp";
+		}
+		else if (player.input.top == 0 && player.input.right > 0){
+			return "Left";
+		}
+		else if (player.input.top == 0 && player.input.right < 0){
+			return "Right";
+		}
+		else {
+			// Lasst Direction
+		}
+
+	};
 
 	return tree;
 }
