@@ -53,3 +53,4 @@ A realtime browser mmorpg
 ## Bugfixes & improvements
 - [ ] Collect imputs for each key & merge it to the movements axis
 - [ ] Calulate Collision from the egdes of the playerbox 
+- [X] ~~Diagonal movement is faster then single direction movements~~

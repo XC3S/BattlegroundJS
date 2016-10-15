@@ -123,14 +123,17 @@ function getPlayersInChunk(chunk){
 // calculate movement 
 function processPlayerMovements(deltaTime){
 	_.each(connectedPlayers,function(player){
+
+		var speedmultiplier = (player.input.right == 0 || player.input.top == 0) ? 1.414 : 1.0;
+		console.log(speedmultiplier);
 		// left & right
 		if(!checkCollisionX(player.location.x, player.location.y, player.input.right, player.movement.speed * deltaTime, 25)){
-			player.location.x += player.input.right * player.movement.speed * deltaTime; 
+			player.location.x += player.input.right * (player.movement.speed * speedmultiplier) * deltaTime; 
 		}
 
 		// top && down
 		if(!checkCollisionY(player.location.x, player.location.y, player.input.top, player.movement.speed * deltaTime, 25)){
-			player.location.y -= player.input.top * player.movement.speed * deltaTime;
+			player.location.y -= player.input.top * (player.movement.speed * speedmultiplier) * deltaTime;
 		};	
 	});
 }
@@ -167,6 +170,10 @@ function removePlayer(player){
 
 function createPlayer(connectionId){
 	var player =  {
+		stats: {
+			health: 500,
+			maxhealth: 500
+		},
 		location: {
 			x: 550,
 			y: 550
