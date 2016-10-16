@@ -12,10 +12,7 @@ function animationManager(){
 	})();
 
 	manager.determinePlayerAnimation = function(player){
-
 		animtrees[player.class](player).updatePlayerAnimation();
-
-
 	};
 
 	return manager;

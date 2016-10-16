@@ -27,6 +27,7 @@ A realtime browser mmorpg
 - [ ] Generic AI System
 - [ ] Basic AI Movement
 - [X] ~~Basic Global Chat~~
+- [ ] use a css precompiler (best case compiled from node)
 
 ## Backoffice & Game Management
 - [ ] Basic Backoffice Framework
