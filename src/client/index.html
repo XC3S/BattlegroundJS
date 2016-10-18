@@ -18,7 +18,7 @@
       .field-2 {background-color: grey}
 
       .healthbar {position: fixed; top: 50px; left: 50px; width: 400px; height: 15px; background-color: #eee; z-index: 10000;}
-      .innerhealthbar {width: 75%; height: 100%; background-color: red;}
+      .innerhealthbar {height: 100%; background-color: red;}
     </style>
   </head>
   <body ng-app="battleApp">
@@ -27,6 +27,7 @@
       <h3>player data</h3>
       {{ownPlayer}}
 
+      <div class="healthbar"><div class="innerhealthbar" style="width:{{100/ownPlayer.stats.maxhealth*ownPlayer.stats.health}}%;"></div></div>
 
       <div class="player" style="left: {{getPlayerRenderLocation().x}}px;top: {{getPlayerRenderLocation().y}}px;background-image: url('/images/anims/{{ownPlayer.class}}/{{ownPlayer.animation.animation}}') "></div>
 
